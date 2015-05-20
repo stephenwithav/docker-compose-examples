@@ -1,0 +1,12 @@
+web:
+  image: nginx
+  ports:
+    - "8080:80"
+  volumes_from:
+    - static
+
+static:
+  image: tianon/true
+  volumes:
+    - ./data/:/usr/share/nginx/html:ro
+  command: /true
