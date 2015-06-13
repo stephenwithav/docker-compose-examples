@@ -1,0 +1,25 @@
+phpserver:
+  build: .
+  ports:
+    - "9090:9090"
+  volumes_from:
+    - phpfiles
+
+
+web:
+  image: nginx
+  ports:
+    - "80:80"
+  links:
+    - phpserver:phpserver
+  volumes:
+    - ./default.conf:/etc/nginx/conf.d/default.conf
+  volumes_from:
+    - phpfiles
+
+
+phpfiles:
+  image: tianon/true
+  volumes:
+    - ./php/:/usr/share/nginx/html
+  command: /true
